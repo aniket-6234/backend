@@ -5,7 +5,8 @@ const userRouter = require("./routes/User/userRoutes");
 const postRouter = require("./routes/Post/postRoutes");
 const commentRouter = require("./routes/Comment/commentRoutes");
 const categoryRouter = require("./routes/Category/categoryRoutes");
-
+const globalErrorHandler = require("./middlewares/globalErrorHandler");
+const routeNotFoundError = require("./middlewares/routeNotFoundError");
 
 // intialize app
 const app = express();
@@ -22,6 +23,8 @@ app.use("/api/v1/comments", commentRouter);
 app.use("/api/v1/categories", categoryRouter);
 
 // error handlers middleware
+app.use(globalErrorHandler);
+app.use('*', routeNotFoundError)
 
 // database connection
 mongoDBConnect();
