@@ -1,5 +1,6 @@
 const express = require('express');
 const { userRegisterCtrl, userLoginCtrl, usersCtrl, userProfileCtrl, userDeleteCtrl, userUpdateCtrl } = require('../../controllers/User/userController');
+const isLogin = require('../../middlewares/isLogin');
 const userRouter = express.Router();
 
 
@@ -13,7 +14,7 @@ userRouter.post('/login', userLoginCtrl);
 userRouter.get('/users', usersCtrl)
 
 // GET: user profile
-userRouter.get("/profile/:id", userProfileCtrl)
+userRouter.get("/profile", isLogin, userProfileCtrl)
 
 // DELETE: user delete
 userRouter.delete('/user/:id', userDeleteCtrl)
