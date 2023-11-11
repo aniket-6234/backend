@@ -19,8 +19,8 @@ app.use(express.json());
 // routes
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/post", postRouter);
-app.use("/api/v1/comments", commentRouter);
-app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/comment", commentRouter);
+app.use("/api/v1/category", categoryRouter);
 
 // error handlers middleware
 app.use(globalErrorHandler);

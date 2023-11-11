@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema(
     title: {
       type: String,
       required: [true, "post title is required"],
+      trim: true,
     },
     description: {
       type: String,
@@ -14,7 +15,7 @@ const postSchema = new mongoose.Schema(
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      required: [true, "post category is required"],
+      // required: [true, "post category is required"],
     },
     numberOfViews: [
       {
@@ -32,6 +33,12 @@ const postSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
+      },
+    ],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
       },
     ],
     user: {

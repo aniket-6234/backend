@@ -7,6 +7,13 @@ const {
   userDeleteCtrl,
   userUpdateCtrl,
   userProfilePhotoUpdateCtrl,
+  whoViewedMyProfileCtrl,
+  userFollowingCtrl,
+  userUnfollowCtrl,
+  userBlockedCtrl,
+  userUnblockedCtrl,
+  userPasswordUpdateCtrl,
+  deleteUserAccountCtrl,
 } = require("../../controllers/User/userController");
 const isLogin = require("../../middlewares/isLogin");
 const storage = require("../../config/cloudinaryConnection");
@@ -29,13 +36,31 @@ userRouter.get("/users", usersCtrl);
 // GET: user profile
 userRouter.get("/profile", isLogin, userProfileCtrl);
 
-// DELETE: user delete
-userRouter.delete("/user/:id", userDeleteCtrl);
+// GET: who viewed my profile
+userRouter.get("/profile-viewer/:id", isLogin, whoViewedMyProfileCtrl);
+
+// GET: user want to following
+userRouter.get("/following/:id", isLogin, userFollowingCtrl);
+
+// GET: user want to unfollewed
+userRouter.get("/unfollow/:id", isLogin, userUnfollowCtrl);
+
+// GET: user blocked
+userRouter.get("/blocked/:id", isLogin, userBlockedCtrl);
+
+// GET: user unblocked
+userRouter.get("/unblocked/:id", isLogin, userUnblockedCtrl);
 
 // PUT: user update
-userRouter.put("user/:id", userUpdateCtrl);
+userRouter.put("/update-user", isLogin, userUpdateCtrl);
+
+// PUT: user update
+userRouter.put("/update-password", isLogin, userPasswordUpdateCtrl);
+
+//DELETE: delete account
+userRouter.delete("/delete-account", isLogin, deleteUserAccountCtrl)
 
 // POST: user profile photo update
-userRouter.post("/profile-photo-upload", upload.single('profile'), userProfilePhotoUpdateCtrl);
+userRouter.post("/profile-photo-upload", isLogin, upload.single('profile'), userProfilePhotoUpdateCtrl);
 
 module.exports = userRouter;

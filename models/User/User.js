@@ -67,6 +67,12 @@ const userSchema = new mongoose.Schema(
         ref: "Post"
       },
     ],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment"
+      },
+    ],
     blocked: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -84,8 +90,32 @@ const userSchema = new mongoose.Schema(
       default: "Bronze"
     }]
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true} },
 );
+
+
+// Hooks (pre and post hooks)
+userSchema.pre('findOne', function(next) {
+  this.populate('posts');
+  next();
+})
+
+// virtual properties
+userSchema.virtual('fullName').get(function() {
+  return `${this.firstName} ${this.lastName}`
+})
+
+userSchema.virtual('postsCount').get(function() {
+  return this.posts.length
+})
+
+userSchema.virtual('followersCount').get(function() {
+  return this.followers.length
+})
+
+userSchema.virtual('followingCount').get(function() {
+  return this.following.length
+})
 
 // Create and export the User model
 const User = mongoose.model("User", userSchema);
